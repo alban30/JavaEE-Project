@@ -28,8 +28,8 @@
 			<th>Last Name</th>
 			<th>Email </th>
 		</tr>
-		<c:forEach var="tempStudent" items="${STUDENT_LIST }" >
-			<c:url var="EditLink" value= "EditStudentServlet">
+		<c:forEach var="tempStudent" items="${STUDENT_LIST}" >
+			<c:url var="EditLink" value="EditStudentServlet">
 			<c:param name="studentId" value="${tempStudent.id}"/>
 			</c:url>
 		
@@ -38,6 +38,7 @@
 					<td> ${tempStudent.last_Name}</td>
 					<td> ${tempStudent.email}</td>
 					<td> <a href="${EditLink }"> Edit</a></td>
+					<td> <input type="button" value="Add Student" onclick=""/></td>
 				</tr>
 		</c:forEach>
 	</table>
