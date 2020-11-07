@@ -15,48 +15,52 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class AddStudentServlet
  */
-@WebServlet("/AddStudentServlet")
-public class AddStudentServlet extends HttpServlet {
+@WebServlet("/AddUserServlet")
+public class AddUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private StudentDBUtil studentDbUtil;
-	@Resource(name="jdbc/student")
+	private UserDBUtil userDbUtil;
+	@Resource(name="jdbc/todo")
 	private DataSource dataSource;
 	
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		studentDbUtil = new StudentDBUtil(dataSource);
+		userDbUtil = new UserDBUtil(dataSource);
 	}
 	
-	public AddStudentServlet() {
+	public AddUserServlet() {
 		 super();
 		 // TODO Auto-generated constructor stub
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+	throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/add-student.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/add-user.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+	throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String fn = request.getParameter("firstName");
-		String ln = request.getParameter("lastName");
+		String username = request.getParameter("username");
+		String first_name = request.getParameter("firstName");
+		String last_name = request.getParameter("lastName");
 		String email = request.getParameter("email");
-		Student student = new Student(fn, ln, email);
+		String profession = request.getParameter("profession");
+		User user = new User(username, first_name, last_name, email, profession);
 		
 		try {
-			studentDbUtil.addStudent(student);
+			userDbUtil.addUser(user);
 		} catch (Exception e) {
 				
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect("StudentControllerServlet");
+		response.sendRedirect("UserControllerServlet");
 	}
 }

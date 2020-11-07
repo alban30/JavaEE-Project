@@ -7,7 +7,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
-		<title>Add Student</title>
+		<title>Add User</title>
 	
 		<link type="text/css" rel="stylesheet" href="css/style.css">
 		<link type="text/css" rel="stylesheet" href="css/add-student-style.css">	
@@ -21,27 +21,32 @@
 		</div>
 		
 		<div id="container">
-			<h3>Add Student</h3>
+			<h3>Add User</h3>
 			
-			<form action="AddStudentServlet" method="post">
+			<form action="AddUserServlet" method="post">
 				
 				<table>
 					<tbody>
 						<tr>
-							<td><label>First name:</label></td>
-							<td><input type="text" name="firstName" value="${Student.first_Name}" /></td>
+							<td><label>Username:</label></td>
+							<td><input type="text" name="username" value="${User.username}" /></td>
 						</tr>
-	
+						<tr>
+							<td><label>First name:</label></td>
+							<td><input type="text" name="firstName" value="${User.first_Name}" /></td>
+						</tr>
 						<tr>
 							<td><label>Last name:</label></td>
-							<td><input type="text" name="lastName" value="${Student.last_Name}" /></td>
+							<td><input type="text" name="lastName" value="${User.last_Name}" /></td>
 						</tr>
-	
 						<tr>
 							<td><label>Email:</label></td>
-							<td><input type="text" name="email" value="${Student.email}" /></td>
+							<td><input type="text" name="email" value="${User.email}" /></td>
 						</tr>
-						
+						<tr>
+							<td><label>Profession:</label></td>
+							<td><input type="text" name="profession" value="${User.profession}" /></td>
+						</tr>
 						<tr>
 							<td><input type="submit" value="Save" /></td>
 						</tr>
@@ -53,7 +58,7 @@
 			<div style="clear: both;"></div>
 			
 			<p>
-				<a href="StudentControllerServlet">Back to List</a>
+				<a href="UserControllerServlet">Back to List</a>
 			</p>
 		</div>
 	</body>

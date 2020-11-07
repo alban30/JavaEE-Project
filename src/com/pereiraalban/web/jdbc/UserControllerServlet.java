@@ -15,33 +15,33 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class StudentControllerServlet
  */
-@WebServlet("/StudentControllerServlet")
-public class StudentControllerServlet extends HttpServlet {
+@WebServlet("/UserControllerServlet")
+public class UserControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private StudentDBUtil studentDbUtil;
-	@Resource(name="jdbc/student")
+	private UserDBUtil studentDbUtil;
+	@Resource(name="jdbc/todo")
 	private DataSource dataSource;
 	
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		studentDbUtil = new StudentDBUtil(dataSource);
+		studentDbUtil = new UserDBUtil(dataSource);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			listStudents(request,response);
+			listUsers(request,response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private void listStudents(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<Student> students = studentDbUtil.getStudents();
-		request.setAttribute("STUDENT_LIST", students);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
+	private void listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<User> users = studentDbUtil.getUsers();
+		request.setAttribute("USER_LIST", users);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-users.jsp");
 		dispatcher.forward(request, response);
 	}
 }

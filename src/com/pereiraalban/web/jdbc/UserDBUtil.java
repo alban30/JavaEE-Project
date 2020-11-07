@@ -9,37 +9,39 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-public class StudentDBUtil {
+public class UserDBUtil {
 	
 	private DataSource dataSource;
 	
-	public StudentDBUtil(DataSource theDataSource) {
+	public UserDBUtil(DataSource theDataSource) {
 		dataSource = theDataSource;
 	}
 	
-	public List<Student> getStudents() throws Exception {
-		List<Student> students = new ArrayList<Student>();
+	public List<User> getUsers() throws Exception {
+		List<User> users = new ArrayList<User>();
 		Connection myConn = null;
 		Statement myStmt = null;
-		ResultSet myRs= null;
+		ResultSet myRs = null;
 		
 		try {
 			myConn = dataSource.getConnection();
 			myStmt = myConn.createStatement();
-			String sql = "select * from student order by last_name";
+			String sql = "SELECT * FROM user ORDER BY username";
 			myRs = myStmt.executeQuery(sql);
 			
 			while(myRs.next()){
 				int id = myRs.getInt("id");
+				String username = myRs.getString("username");
 				String firstName = myRs.getString("first_name");
 				String lastName = myRs.getString("last_name");
 				String email = myRs.getString("email");
+				String profession = myRs.getString("profession");
 				
-			Student tempStudent= new Student(id,firstName,lastName,email);
-				students.add(tempStudent);
+			User tempUser = new User(id, username, firstName, lastName, email, profession);
+				users.add(tempUser);
 			}
 			
-			return students;
+			return users;
 				
 		} finally {
 			close(myConn, myStmt, myRs);
@@ -47,7 +49,7 @@ public class StudentDBUtil {
 		
 	}
 	
-	public void addStudent(Student Student) throws Exception {
+	public void addUser(User user) throws Exception {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
@@ -56,46 +58,50 @@ public class StudentDBUtil {
 			myConn = dataSource.getConnection();
 				
 			// create sql for insert
-			String sql = "insert into student" 
-			+ "(first_name,last_name, email)"
-			+ "values(?,?,?)";
+			String sql = "INSERT INTO user" 
+			+ "(username, first_name, last_name, email, profession)"
+			+ "values(?, ?, ?, ?, ?)";
 			
 			myStmt = myConn.prepareStatement(sql);
 			
 			// set the param values for the student
-			myStmt.setString(1, Student.getFirst_Name());
-			myStmt.setString(2, Student.getLast_Name());
-			myStmt.setString(3, Student.getEmail());
+			myStmt.setString(1, user.getUsername());
+			myStmt.setString(2, user.getFirst_Name());
+			myStmt.setString(3, user.getLast_Name());
+			myStmt.setString(4, user.getEmail());
+			myStmt.setString(5, user.getProfession());
 			
 			// execute sql insert
 			myStmt.execute();
 			
 			} finally {
 			// clean up JDBC objects
-				close(myConn,myStmt,null);
+				close(myConn, myStmt, null);
 		}
 	}
 
-	public Student fetchStudent(int id) {
+	public User fetchUser(int id) {
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		Student student = null;
+		User user = null;
 		
 		try {
 			myConn = dataSource.getConnection();
 			myStmt = myConn.createStatement();
 			
-			String sql = "select * from student where id="+id;
+			String sql = "SELECT * FROM user WHERE id=" + id;
 			myRs = myStmt.executeQuery(sql);
 			while(myRs.next()) {
+				String username = myRs.getString("username");
 				String firstName = myRs.getString("first_name");
 				String lastName = myRs.getString("last_name");
 				String email = myRs.getString("email");
+				String profession = myRs.getString("profession");
 				
-				student = new Student(id,firstName,lastName,email);
+				user = new User(id, username, firstName, lastName, email, profession);
 			}
-			return student;
+			return user;
 			
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -106,25 +112,27 @@ public class StudentDBUtil {
 		}
 	}
 	
-	public void updateStudent(Student student) {
+	public void updateUser(User user) {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
 		try {
 			myConn = dataSource.getConnection();
-			String sql = "update student set first_name=?, last_name=?, email=? where id=?";
+			String sql = "UPDATE user SET username=?, first_name=?, last_name=?, email=?, profession=? WHERE id=?";
 			myStmt = myConn.prepareStatement(sql);
 				
-			myStmt.setString(1, student.getFirst_Name());
-			myStmt.setString(2, student.getLast_Name());
-			myStmt.setString(3, student.getEmail());
-			myStmt.setInt(4, student.getId());
+			myStmt.setString(1, user.getUsername());
+			myStmt.setString(2, user.getFirst_Name());
+			myStmt.setString(3, user.getLast_Name());
+			myStmt.setString(4, user.getEmail());
+			myStmt.setString(5, user.getProfession());
+			myStmt.setInt(6, user.getId());
 			myStmt.execute();
 			
 		} catch(Exception e){
 			System.out.println(e.getMessage());
 		} finally{
-			close(myConn,myStmt,null);
+			close(myConn, myStmt, null);
 		}
 	}
 	
@@ -135,7 +143,7 @@ public class StudentDBUtil {
 		try {
 			myConn = dataSource.getConnection();
 			
-			String sql = "delete from student where id=?";
+			String sql = "DELETE FROM user WHERE id=?";
 			myStmt = myConn.prepareStatement(sql);
 			myStmt.setInt(1, id);
 			myStmt.execute();

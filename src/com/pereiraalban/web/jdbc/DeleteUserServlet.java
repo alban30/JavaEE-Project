@@ -13,30 +13,30 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class EditStudentServlet
  */
-@WebServlet("/DeleteStudentServlet")
-public class DeleteStudentServlet extends HttpServlet {
+@WebServlet("/DeleteUserServlet")
+public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private StudentDBUtil studentDbUtil;
-	@Resource(name="jdbc/student")
+	private UserDBUtil userDbUtil;
+	@Resource(name="jdbc/todo")
 	private DataSource dataSource;
 	int id;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		studentDbUtil = new StudentDBUtil(dataSource);
+		userDbUtil = new UserDBUtil(dataSource);
 	}
 	
-	public DeleteStudentServlet() {
+	public DeleteUserServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		id = Integer.parseInt(request.getParameter("studentId"));
-		studentDbUtil.deleteStudent(id);
-		response.sendRedirect("StudentControllerServlet");
+		id = Integer.parseInt(request.getParameter("userId"));
+		userDbUtil.deleteStudent(id);
+		response.sendRedirect("UserControllerServlet");
 	}
 }
 

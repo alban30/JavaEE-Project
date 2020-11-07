@@ -13,41 +13,43 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class EditStudentServlet
  */
-@WebServlet("/EditStudentServlet")
-public class EditStudentServlet extends HttpServlet {
+@WebServlet("/EditUserServlet")
+public class EditUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private StudentDBUtil studentDbUtil;
-	@Resource(name="jdbc/student")
+	private UserDBUtil userDbUtil;
+	@Resource(name="jdbc/todo")
 	private DataSource dataSource;
 	int id;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		studentDbUtil = new StudentDBUtil(dataSource);
+		userDbUtil = new UserDBUtil(dataSource);
 	}
 	
-	public EditStudentServlet() {
+	public EditUserServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		id = Integer.parseInt(request.getParameter("studentId"));
-		Student student = studentDbUtil.fetchStudent(id);
-		request.setAttribute("Student", student);
-		request.getRequestDispatcher("edit-student.jsp").forward(request, response);
+		id = Integer.parseInt(request.getParameter("userId"));
+		User user = userDbUtil.fetchUser(id);
+		request.setAttribute("User", user);
+		request.getRequestDispatcher("edit-user.jsp").forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
 	ServletException, IOException {
-		String fn = request.getParameter("firstName");
-		String ln = request.getParameter("lastName");
+		String username = request.getParameter("username");
+		String first_name = request.getParameter("firstName");
+		String last_name = request.getParameter("lastName");
 		String email = request.getParameter("email");
-		Student student = new Student(id,fn,ln,email);
-		studentDbUtil.updateStudent(student);
-		response.sendRedirect("StudentControllerServlet");
+		String profession = request.getParameter("profession");
+		User user = new User(id, username, first_name, last_name, email, profession);
+		userDbUtil.updateUser(user);
+		response.sendRedirect("UserControllerServlet");
 	}
 }
 
