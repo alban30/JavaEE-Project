@@ -128,7 +128,7 @@ public class StudentDBUtil {
 		}
 	}
 	
-	public void deleteStudent(Student student) {
+	public void deleteStudent(int id) {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
@@ -137,7 +137,7 @@ public class StudentDBUtil {
 			
 			String sql = "delete from student where id=?";
 			myStmt = myConn.prepareStatement(sql);
-			myStmt.setInt(1, student.getId());
+			myStmt.setInt(1, id);
 			myStmt.execute();
 			
 		} catch(Exception e){
@@ -149,13 +149,13 @@ public class StudentDBUtil {
 	
 	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		try {
-			if(myStmt!=null)
+			if(myStmt != null)
 				myStmt.close();
 			
-			if(myRs!=null)
+			if(myRs != null)
 				myRs.close();
 			
-			if(myConn!=null)
+			if(myConn != null)
 				myConn.close();
 			
 		} catch(Exception e){
