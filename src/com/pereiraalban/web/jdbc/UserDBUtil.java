@@ -159,6 +159,38 @@ public class UserDBUtil {
 		}
 	}
 	
+public boolean loginCheck(String username, String password) throws ClassNotFoundException{
+		
+		Connection myConn=null;
+		PreparedStatement myStmt = null;
+		
+		try {
+			System.out.println(username);
+			System.out.println(password);
+		
+			myConn = dataSource.getConnection();
+			
+			String sql= "select * from user where username = ? and password = ?";
+			myStmt = myConn.prepareStatement(sql);			
+			myStmt.setString(1, username);
+			myStmt.setString(2, password);
+			
+			ResultSet rs = myStmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+			
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			
+			
+		} finally{
+			close(myConn,myStmt,null);
+		}
+		return false;
+	}
+	
 	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		try {
 			if(myStmt != null)
