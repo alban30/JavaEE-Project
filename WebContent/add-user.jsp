@@ -10,7 +10,7 @@
 		<title>Add User</title>
 	
 		<link type="text/css" rel="stylesheet" href="css/style.css">
-		<link type="text/css" rel="stylesheet" href="css/add-student-style.css">	
+		<link type="text/css" rel="stylesheet" href="css/add-style.css">	
 	</head>
 	
 	<body>
@@ -30,6 +30,10 @@
 						<tr>
 							<td><label>Username:</label></td>
 							<td><input type="text" name="username" value="${User.username}" /></td>
+						</tr>
+						<tr>
+							<td><label>Password:</label></td>
+							<td><input type="text" name="username" value="${User.password}" /></td>
 						</tr>
 						<tr>
 							<td><label>First name:</label></td>

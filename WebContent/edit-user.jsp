@@ -28,6 +28,10 @@
 							<td><input type="text" name="username" value="${User.username}"/></td>
 						</tr>
 						<tr>
+							<td><label>Password: </label> </td>
+							<td><input type="text" name="password" value="${User.password}"/></td>
+						</tr>
+						<tr>
 							<td><label>FirstName: </label> </td>
 							<td><input type="text" name="firstName" value="${User.first_Name}"/></td>
 						</tr>

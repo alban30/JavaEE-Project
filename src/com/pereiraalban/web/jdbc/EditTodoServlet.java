@@ -13,10 +13,10 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class EditStudentServlet
  */
-@WebServlet("/EditUserServlet")
-public class EditUserServlet extends HttpServlet {
+@WebServlet("/EditTodoServlet")
+public class EditTodoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserDBUtil userDbUtil;
+	private TodoDBUtil todoDbUtil;
 	@Resource(name="jdbc/todo")
 	private DataSource dataSource;
 	int id;
@@ -24,33 +24,28 @@ public class EditUserServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		userDbUtil = new UserDBUtil(dataSource);
+		todoDbUtil = new TodoDBUtil(dataSource);
 	}
 	
-	public EditUserServlet() {
+	public EditTodoServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		id = Integer.parseInt(request.getParameter("userId"));
-		User user = userDbUtil.fetchUser(id);
-		request.setAttribute("User", user);
-		request.getRequestDispatcher("edit-user.jsp").forward(request, response);
+		id = Integer.parseInt(request.getParameter("todoId"));
+		Todo todo = todoDbUtil.fetchTodo(id);
+		request.setAttribute("Todo", todo);
+		request.getRequestDispatcher("edit-todo.jsp").forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
 	ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String first_name = request.getParameter("firstName");
-		String last_name = request.getParameter("lastName");
-		String email = request.getParameter("email");
-		String profession = request.getParameter("profession");
-		User user = new User(id, username, password, first_name, last_name, email, profession);
-		userDbUtil.updateUser(user);
-		response.sendRedirect("UserControllerServlet");
+		String description = request.getParameter("description");
+		Todo todo = new Todo(id, description);
+		todoDbUtil.updateTodo(todo);
+		response.sendRedirect("TodoControllerServlet");
 	}
 }
 

@@ -9,16 +9,16 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-public class UserDBUtil {
+public class TodoDBUtil {
 	
 	private DataSource dataSource;
 	
-	public UserDBUtil(DataSource theDataSource) {
+	public TodoDBUtil(DataSource theDataSource) {
 		dataSource = theDataSource;
 	}
 	
-	public List<User> getUsers() throws Exception {
-		List<User> users = new ArrayList<User>();
+	public List<Todo> getTodos() throws Exception {
+		List<Todo> todos = new ArrayList<Todo>();
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -26,23 +26,18 @@ public class UserDBUtil {
 		try {
 			myConn = dataSource.getConnection();
 			myStmt = myConn.createStatement();
-			String sql = "SELECT * FROM user ORDER BY username";
+			String sql = "SELECT * FROM todolist";
 			myRs = myStmt.executeQuery(sql);
 			
 			while(myRs.next()){
 				int id = myRs.getInt("id");
-				String username = myRs.getString("username");
-				String password = myRs.getString("password");
-				String firstName = myRs.getString("first_name");
-				String lastName = myRs.getString("last_name");
-				String email = myRs.getString("email");
-				String profession = myRs.getString("profession");
+				String description = myRs.getString("description");
 				
-			User tempUser = new User(id, username, password, firstName, lastName, email, profession);
-				users.add(tempUser);
+			Todo tempTodo = new Todo(id, description);
+			todos.add(tempTodo);
 			}
 			
-			return users;
+			return todos;
 				
 		} finally {
 			close(myConn, myStmt, myRs);
@@ -50,7 +45,7 @@ public class UserDBUtil {
 		
 	}
 	
-	public void addUser(User user) throws Exception {
+	public void addTodo(Todo todo) throws Exception {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
@@ -59,19 +54,12 @@ public class UserDBUtil {
 			myConn = dataSource.getConnection();
 				
 			// create sql for insert
-			String sql = "INSERT INTO user" 
-			+ "(username, password, first_name, last_name, email, profession)"
-			+ "values(?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO todolist (description) values(?)";
 			
 			myStmt = myConn.prepareStatement(sql);
 			
 			// set the param values for the student
-			myStmt.setString(1, user.getUsername());
-			myStmt.setString(2, user.getPassword());
-			myStmt.setString(3, user.getFirst_Name());
-			myStmt.setString(4, user.getLast_Name());
-			myStmt.setString(5, user.getEmail());
-			myStmt.setString(6, user.getProfession());
+			myStmt.setString(1, todo.getDescription());
 			
 			// execute sql insert
 			myStmt.execute();
@@ -82,29 +70,24 @@ public class UserDBUtil {
 		}
 	}
 
-	public User fetchUser(int id) {
+	public Todo fetchTodo(int id) {
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		User user = null;
+		Todo todo = null;
 		
 		try {
 			myConn = dataSource.getConnection();
 			myStmt = myConn.createStatement();
 			
-			String sql = "SELECT * FROM user WHERE id=" + id;
+			String sql = "SELECT * FROM todolist WHERE id=" + id;
 			myRs = myStmt.executeQuery(sql);
 			while(myRs.next()) {
-				String username = myRs.getString("username");
-				String password = myRs.getString("password");
-				String firstName = myRs.getString("first_name");
-				String lastName = myRs.getString("last_name");
-				String email = myRs.getString("email");
-				String profession = myRs.getString("profession");
+				String description = myRs.getString("description");
 				
-				user = new User(id, username, password, firstName, lastName, email, profession);
+				todo = new Todo(id, description);
 			}
-			return user;
+			return todo;
 			
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -115,22 +98,17 @@ public class UserDBUtil {
 		}
 	}
 	
-	public void updateUser(User user) {
+	public void updateTodo(Todo todo) {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
 		try {
 			myConn = dataSource.getConnection();
-			String sql = "UPDATE user SET username=?, password=?, first_name=?, last_name=?, email=?, profession=? WHERE id=?";
+			String sql = "UPDATE todolist SET description=? WHERE id=?";
 			myStmt = myConn.prepareStatement(sql);
 				
-			myStmt.setString(1, user.getUsername());
-			myStmt.setString(2, user.getPassword());
-			myStmt.setString(3, user.getFirst_Name());
-			myStmt.setString(4, user.getLast_Name());
-			myStmt.setString(5, user.getEmail());
-			myStmt.setString(6, user.getProfession());
-			myStmt.setInt(7, user.getId());
+			myStmt.setString(1, todo.getDescription());
+			myStmt.setInt(2, todo.getId());
 			myStmt.execute();
 			
 		} catch(Exception e){
@@ -140,14 +118,14 @@ public class UserDBUtil {
 		}
 	}
 	
-	public void deleteStudent(int id) {
+	public void deleteTodo(int id) {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
 		try {
 			myConn = dataSource.getConnection();
 			
-			String sql = "DELETE FROM user WHERE id=?";
+			String sql = "DELETE FROM todolist WHERE id=?";
 			myStmt = myConn.prepareStatement(sql);
 			myStmt.setInt(1, id);
 			myStmt.execute();

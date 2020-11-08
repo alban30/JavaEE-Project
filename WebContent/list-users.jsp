@@ -17,7 +17,7 @@
 		<div id="container">
 			<div id="content">
 				
-				<input type="button" value="Add User" onclick="window.location.href= 'add-user.jsp' ; return false;" class = "add-button"/>
+				<input type="button" value="Add User" onclick="window.location.href= 'add-user.jsp' ; return false;" class="add-button"/>
 				
 				<table>
 					<tr>

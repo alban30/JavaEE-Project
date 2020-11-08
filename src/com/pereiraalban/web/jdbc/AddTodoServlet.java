@@ -15,10 +15,10 @@ import javax.sql.DataSource;
 /**
  * Servlet implementation class AddStudentServlet
  */
-@WebServlet("/AddUserServlet")
-public class AddUserServlet extends HttpServlet {
+@WebServlet("/AddTodoServlet")
+public class AddTodoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private UserDBUtil userDbUtil;
+	private TodoDBUtil todoDbUtil;
 	@Resource(name="jdbc/todo")
 	private DataSource dataSource;
 	
@@ -26,10 +26,10 @@ public class AddUserServlet extends HttpServlet {
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		userDbUtil = new UserDBUtil(dataSource);
+		todoDbUtil = new TodoDBUtil(dataSource);
 	}
 	
-	public AddUserServlet() {
+	public AddTodoServlet() {
 		 super();
 		 // TODO Auto-generated constructor stub
 	}
@@ -37,7 +37,7 @@ public class AddUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/add-user.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/add-todo.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -47,20 +47,15 @@ public class AddUserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String first_name = request.getParameter("firstName");
-		String last_name = request.getParameter("lastName");
-		String email = request.getParameter("email");
-		String profession = request.getParameter("profession");
-		User user = new User(username, password, first_name, last_name, email, profession);
+		String description = request.getParameter("description");
+		Todo todo = new Todo(description);
 		
 		try {
-			userDbUtil.addUser(user);
-		} catch (Exception e) {
+			todoDbUtil.addTodo(todo);
+		} catch (Exception e) {	
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect("UserControllerServlet");
+		response.sendRedirect("TodoControllerServlet");
 	}
 }

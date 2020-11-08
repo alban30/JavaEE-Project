@@ -3,12 +3,13 @@ package com.pereiraalban.web.jdbc;
 public class User {
 	int id;
 	String username;
+	String password;
 	String first_Name;
 	String last_Name;
 	String email;
 	String profession;
 	
-	public User(int id, String username, String first_Name, String last_Name, String email, String profession) {	
+	public User(int id, String username, String password, String first_Name, String last_Name, String email, String profession) {	
 		this.id = id;
 		this.username = username;
 		this.first_Name = first_Name;
@@ -16,9 +17,10 @@ public class User {
 		this.email = email;
 		this.profession = profession;
 	}
-	
-	public User(String username, String first_Name, String last_Name, String email, String profession) {
+
+	public User(String username, String password, String first_Name, String last_Name, String email, String profession) {
 		this.username = username;
+		this.password = password;
 		this.first_Name = first_Name;
 		this.last_Name = last_Name;
 		this.email = email;
@@ -27,8 +29,8 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "Student [id=" + this.id + ", username=" + this.username + ", First_name=" + this.first_Name + 
-				", Last_name=" + this.last_Name + ", email=" + this.email + ", profession=" + this.profession + "]";
+		return "Student [id = " + this.id + ", username = " + this.username + ", First_name = " + this.first_Name + 
+				", Last_name = " + this.last_Name + ", email = " + this.email + ", profession = " + this.profession + "]";
 	}
 
 	public int getId() {
@@ -37,6 +39,14 @@ public class User {
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public String getUsername() {
