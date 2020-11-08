@@ -10,6 +10,8 @@
 <link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 <body>
+Welcome ${uname}
+
 <div id="wrapper">
 	<div id="header">
 		<h2>Welcome to Todo List Login</h2>

@@ -7,6 +7,9 @@
 	</head>
 	
 	<body>
+	<c:if test="${!empty sessionScope.uname}">
+	<p> Welcome ${sessionScope.uname} </p>
+	</c:if>
 		<!-- ${STUDENT_LIST}-->
 		<div id="wrapper">
 			<div id="header">
