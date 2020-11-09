@@ -1,18 +1,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+ pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>Web Todo Tracker</title>
+		<title>Todolist</title>
 		<link type="text/css" rel="stylesheet" href="css/style.css">
 	</head>
 	
 	<body>
-	<c:url var="LogoutLink" value="LogoutSessionServlet"></c:url>
-	<a href="${LogoutLink}"> Logout</a>
-	
-	<c:if test="${!empty sessionScope.uname}">
-		<p> Welcome ${sessionScope.uname} </p>
-	</c:if>
+		<c:url var="LogoutLink" value="LogoutSessionServlet"></c:url>
+		<a href="${LogoutLink}"> Logout</a>
+		
+		<c:if test="${!empty sessionScope.uname}">
+			<p> Welcome ${sessionScope.uname} </p>
+		</c:if>
+		
 		<!-- ${STUDENT_LIST}-->
 		<div id="wrapper">
 			<div id="header">

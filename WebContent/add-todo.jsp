@@ -7,13 +7,16 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
-		<title>Add Todo</title>
+		<title>Todolist - Add todo</title>
 	
 		<link type="text/css" rel="stylesheet" href="css/style.css">
 		<link type="text/css" rel="stylesheet" href="css/add-style.css">	
 	</head>
 	
 	<body>
+		<c:url var="LogoutLink" value="LogoutSessionServlet"></c:url>
+		<a href="${LogoutLink}"> Logout</a>
+		
 		<div id="wrapper">
 			<div id="header">
 				<h2>ESILV Engineer School</h2>

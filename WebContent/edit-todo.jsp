@@ -8,10 +8,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link type="text/css" rel="stylesheet" href="css/add-student-style.css">
 		<link type="text/css" rel="stylesheet" href="css/style.css">
-		<title>Edit a Todo</title>
+		<title>Todolist - Edit todo</title>
 	</head>
 	
 	<body>
+		<c:url var="LogoutLink" value="LogoutSessionServlet"></c:url>
+		<a href="${LogoutLink}"> Logout</a>
+		
 		<div id="wrapper">
 			<div id="header">
 				<h2>ESILV Engineer School</h2>

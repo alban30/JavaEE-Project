@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    	request.getRequestDispatcher("login-student.jsp").forward(request, response);
+    		request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 	
 	/**
@@ -59,8 +59,8 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("TodoControllerServlet");
 			}
 			else {
-				response.sendRedirect("error.jsp");
-			}	
+				response.sendRedirect("error-login.jsp");
+			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
