@@ -9,8 +9,15 @@
 <body>
 <div id="wrapper">
 	<div id="header">
-		<h2>C'est pas good</h2>
+		<h2> Sorry, username or password incorrect</h2>
 	</div>
+	
 </div>
+
+<div style="clear:both;"></div>
+			<p>
+				<a href="login-student.jsp">Back to Login</a>
+			</p>
+			
 </body>
 </html>
