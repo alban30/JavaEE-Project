@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 /**
@@ -37,8 +38,14 @@ public class AddTodoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/add-todo.jsp");
-		dispatcher.forward(request, response);
+		HttpSession session = request.getSession(true);
+		
+		if(session.getAttribute("prof") == "instructor") {
+			request.getRequestDispatcher("/add-todo.jsp").forward(request, response);
+		}
+		else {
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
 	}
 
 	/**

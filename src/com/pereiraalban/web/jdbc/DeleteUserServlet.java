@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 /**
@@ -34,9 +35,16 @@ public class DeleteUserServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		id = Integer.parseInt(request.getParameter("userId"));
-		userDbUtil.deleteStudent(id);
-		response.sendRedirect("UserControllerServlet");
+		HttpSession session = request.getSession(true);
+		
+		if(session.getAttribute("prof").equals("instructor")) {
+			id = Integer.parseInt(request.getParameter("userId"));
+			userDbUtil.deleteStudent(id);
+			response.sendRedirect("UserControllerServlet");
+		}
+		else {
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
 	}
 }
 

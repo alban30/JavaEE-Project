@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+
 /**
  * Servlet implementation class EditStudentServlet
  */
@@ -35,10 +37,17 @@ public class EditTodoServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		id = Integer.parseInt(request.getParameter("todoId"));
-		Todo todo = todoDbUtil.fetchTodo(id);
-		request.setAttribute("Todo", todo);
-		request.getRequestDispatcher("edit-todo.jsp").forward(request, response);
+		HttpSession session = request.getSession(true);
+		
+		if(session.getAttribute("prof").equals("instructor")) {
+			id = Integer.parseInt(request.getParameter("todoId"));
+			Todo todo = todoDbUtil.fetchTodo(id);
+			request.setAttribute("Todo", todo);
+			request.getRequestDispatcher("edit-todo.jsp").forward(request, response);
+		}
+		else {
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws

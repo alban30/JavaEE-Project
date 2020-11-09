@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 /**
@@ -34,9 +35,16 @@ public class DeleteTodoServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
-		id = Integer.parseInt(request.getParameter("todoId"));
-		todoDbUtil.deleteTodo(id);
-		response.sendRedirect("TodoControllerServlet");
+		HttpSession session = request.getSession(true);
+		
+		if(session.getAttribute("prof").equals("instructor")) {
+			id = Integer.parseInt(request.getParameter("todoId"));
+			todoDbUtil.deleteTodo(id);
+			response.sendRedirect("TodoControllerServlet");
+		}
+		else {
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+		}
 	}
 }
 
