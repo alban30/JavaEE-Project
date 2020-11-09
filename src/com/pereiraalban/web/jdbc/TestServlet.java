@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@Resource(name="jdbc/student")
+	@Resource(name="jdbc/todo")
 	private DataSource dataSource;
 
 	/**
@@ -42,13 +42,13 @@ public class TestServlet extends HttpServlet {
 		try {
 				myConn = dataSource.getConnection();
 				//Step3: create SQL statements
-				String sql = "select * from student";
+				String sql = "select * from user";
 				myStmt = myConn.createStatement();
 				//Step4: Execute SQL query
 				myRs = myStmt.executeQuery(sql);
 				//Step5: Process the ResultSet
 				while(myRs.next()){
-					String email = myRs.getString("email");
+					String email = myRs.getString("username");
 					out.println(email);
 				}
 		}

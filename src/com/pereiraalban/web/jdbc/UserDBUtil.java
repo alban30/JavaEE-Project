@@ -111,10 +111,9 @@ public class UserDBUtil {
 			return null;
 			
 		} finally {
-			close(myConn,myStmt,myRs);
+			close(myConn, myStmt, myRs);
 		}
 	}
-	
 	
 	public String fetchProfession(String username) {
 		Connection myConn = null;
@@ -126,13 +125,13 @@ public class UserDBUtil {
 			myConn = dataSource.getConnection();
 			myStmt = myConn.createStatement();
 			
-			String sql = "SELECT profession FROM user WHERE username=" + username;
+			String sql = "SELECT profession FROM user WHERE username='" + username + "'";
 			myRs = myStmt.executeQuery(sql);
+			
 			while(myRs.next()) {
-				
-				profession = myRs.getString("profession");
-				System.out.println(profession);			
+				profession = myRs.getString("profession");		
 			}
+			
 			return profession;
 			
 		} catch(Exception e) {
@@ -140,7 +139,7 @@ public class UserDBUtil {
 			return null;
 			
 		} finally {
-			close(myConn,myStmt,myRs);
+			close(myConn, myStmt, myRs);
 		}
 	}
 	
@@ -188,15 +187,11 @@ public class UserDBUtil {
 		}
 	}
 	
-public boolean loginCheck(String username, String password) throws ClassNotFoundException{
-		
+	public boolean loginCheck(String username, String password) throws ClassNotFoundException{
 		Connection myConn=null;
 		PreparedStatement myStmt = null;
 		
 		try {
-			System.out.println(username);
-			System.out.println(password);
-		
 			myConn = dataSource.getConnection();
 			
 			String sql= "select * from user where username = ? and password = ?";
@@ -208,14 +203,13 @@ public boolean loginCheck(String username, String password) throws ClassNotFound
 			if (rs.next()) {
 				return true;
 			}
-			
-			
-		}catch(Exception e){
+		
+		} catch(Exception e){
 			System.out.println(e.getMessage());
 			
 			
 		} finally{
-			close(myConn,myStmt,null);
+			close(myConn, myStmt, null);
 		}
 		return false;
 	}

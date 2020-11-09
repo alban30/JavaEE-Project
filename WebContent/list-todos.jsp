@@ -7,8 +7,11 @@
 	</head>
 	
 	<body>
+	<c:url var="LogoutLink" value="LogoutSessionServlet"></c:url>
+	<a href="${LogoutLink}"> Logout</a>
+	
 	<c:if test="${!empty sessionScope.uname}">
-	<p> Welcome ${sessionScope.uname} </p>
+		<p> Welcome ${sessionScope.uname} </p>
 	</c:if>
 		<!-- ${STUDENT_LIST}-->
 		<div id="wrapper">
@@ -20,7 +23,9 @@
 		<div id="container">
 			<div id="content">
 				
-				<input type="button" value="Add Todo" onclick="window.location.href= 'add-todo.jsp' ; return false;" class="add-button"/>
+				<c:if test="${sessionScope.prof.equals('instructor')}">
+		 			<input type="button" value="Add Todo" onclick="window.location.href= 'add-todo.jsp' ; return false;" class="add-button"/>
+				</c:if>	
 				
 				<table>
 					<tr>
