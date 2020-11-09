@@ -115,6 +115,35 @@ public class UserDBUtil {
 		}
 	}
 	
+	
+	public String fetchProfession(String username) {
+		Connection myConn = null;
+		Statement myStmt = null;
+		ResultSet myRs = null;
+		String profession = null;
+		
+		try {
+			myConn = dataSource.getConnection();
+			myStmt = myConn.createStatement();
+			
+			String sql = "SELECT profession FROM user WHERE username=" + username;
+			myRs = myStmt.executeQuery(sql);
+			while(myRs.next()) {
+				
+				profession = myRs.getString("profession");
+				System.out.println(profession);			
+			}
+			return profession;
+			
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			
+		} finally {
+			close(myConn,myStmt,myRs);
+		}
+	}
+	
 	public void updateUser(User user) {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;

@@ -37,8 +37,10 @@
 							<tr>
 								<td>${tempTodo.id}</td>
 								<td>${tempTodo.description}</td>
-								<td><a href="${EditLink}"> Edit</a></td>
-								<td><a href="${DeleteLink}"> Delete</a></td>
+								<c:if test="${sessionScope.prof.equals('instructor')}">
+		 							<td><a href="${EditLink}"> Edit</a></td>
+									<td><a href="${DeleteLink}"> Delete</a></td>
+								</c:if>								
 							</tr>
 					</c:forEach>
 				</table>
