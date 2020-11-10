@@ -40,8 +40,8 @@ public class AddTodoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 		
-		if(session.getAttribute("prof") == "instructor") {
-			request.getRequestDispatcher("/add-todo.jsp").forward(request, response);
+		if(session.getAttribute("prof").equals("instructor")) {
+			request.getRequestDispatcher("add-todo.jsp").forward(request, response);
 		}
 		else {
 			request.getRequestDispatcher("error.jsp").forward(request, response);

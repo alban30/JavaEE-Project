@@ -28,7 +28,7 @@
 			<div id="content">
 				
 				<c:if test="${sessionScope.prof.equals('instructor')}">
-		 			<input type="button" value="Add Todo" onclick="window.location.href= 'add-todo.jsp' ; return false;" class="add-button"/>
+		 			<input type="button" value="Add Todo" onclick="window.location.href= 'AddTodoServlet' ; return false;" class="add-button"/>
 				</c:if>	
 				
 				<table>
