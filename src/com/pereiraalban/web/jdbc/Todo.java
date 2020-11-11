@@ -1,6 +1,9 @@
 package com.pereiraalban.web.jdbc;
 
+
+
 public class Todo {
+	//defing two private attriburte
 	int id;
 	String description;
 	

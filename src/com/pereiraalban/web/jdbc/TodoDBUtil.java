@@ -17,27 +17,28 @@ public class TodoDBUtil {
 		dataSource = theDataSource;
 	}
 	
+	// this function fetches the descriptions from the database and store them into a list
 	public List<Todo> getTodos() throws Exception {
-		List<Todo> todos = new ArrayList<Todo>();
-		Connection myConn = null;
-		Statement myStmt = null;
+		List<Todo> todos = new ArrayList<Todo>(); // creating a new list
+		Connection myConn = null; 
+		Statement myStmt = null; 
 		ResultSet myRs = null;
 		
 		try {
-			myConn = dataSource.getConnection();
-			myStmt = myConn.createStatement();
+			myConn = dataSource.getConnection(); // getting a connection from the pool
+			myStmt = myConn.createStatement(); // creating a statement 	
 			String sql = "SELECT * FROM todolist";
-			myRs = myStmt.executeQuery(sql);
+			myRs = myStmt.executeQuery(sql); // executing the statement and put the result in a ResultSet
 			
-			while(myRs.next()){
+			while(myRs.next()){ //exploring the result set
 				int id = myRs.getInt("id");
 				String description = myRs.getString("description");
 				
-			Todo tempTodo = new Todo(id, description);
-			todos.add(tempTodo);
+			Todo tempTodo = new Todo(id, description); // creating a new Todo object for each row from the database
+			todos.add(tempTodo);// adding the Todo object to the list
 			}
 			
-			return todos;
+			return todos; // retrun the list
 				
 		} finally {
 			close(myConn, myStmt, myRs);
@@ -45,31 +46,25 @@ public class TodoDBUtil {
 		
 	}
 	
+	//this function adds a new descrption to the Todo database
 	public void addTodo(Todo todo) throws Exception {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
 		
 		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-				
-			// create sql for insert
-			String sql = "INSERT INTO todolist (description) values(?)";
 			
-			myStmt = myConn.prepareStatement(sql);
-			
-			// set the param values for the student
-			myStmt.setString(1, todo.getDescription());
-			
-			// execute sql insert
-			myStmt.execute();
+			myConn = dataSource.getConnection(); // get db connection			
+			String sql = "INSERT INTO todolist (description) values(?)"; // create sql for insert			
+			myStmt = myConn.prepareStatement(sql); 
+			myStmt.setString(1, todo.getDescription()); //set the param values for the student
+			myStmt.execute(); // execute sql insert
 			
 			} finally {
-			// clean up JDBC objects
-				close(myConn, myStmt, null);
+				close(myConn, myStmt, null); // clean up JDBC objects
 		}
 	}
-
+	
+	// this function retrieve a description from the database with a given id
 	public Todo fetchTodo(int id) {
 		Connection myConn = null;
 		Statement myStmt = null;
@@ -80,7 +75,7 @@ public class TodoDBUtil {
 			myConn = dataSource.getConnection();
 			myStmt = myConn.createStatement();
 			
-			String sql = "SELECT * FROM todolist WHERE id=" + id;
+			String sql = "SELECT description FROM todolist WHERE id=" + id;
 			myRs = myStmt.executeQuery(sql);
 			while(myRs.next()) {
 				String description = myRs.getString("description");
@@ -97,7 +92,7 @@ public class TodoDBUtil {
 			close(myConn,myStmt,myRs);
 		}
 	}
-	
+	// this function updates a description from the database with a given id
 	public void updateTodo(Todo todo) {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
@@ -118,6 +113,7 @@ public class TodoDBUtil {
 		}
 	}
 	
+	// this function deletes a description from the database with a given id
 	public void deleteTodo(int id) {
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
@@ -136,6 +132,7 @@ public class TodoDBUtil {
 			close(myConn, myStmt, null);
 		}
 	}
+	
 	
 	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		try {

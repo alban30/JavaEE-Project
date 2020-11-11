@@ -29,6 +29,7 @@ public class TodoControllerServlet extends HttpServlet {
 		todoDbUtil = new TodoDBUtil(dataSource);
 	}
 	
+	// calling the jsp page to display the list of description
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			listUsers(request,response);
@@ -37,7 +38,7 @@ public class TodoControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+	// listing the descriptions from the database
 	private void listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Todo> todos = todoDbUtil.getTodos();
 		request.setAttribute("TODO_LIST", todos);

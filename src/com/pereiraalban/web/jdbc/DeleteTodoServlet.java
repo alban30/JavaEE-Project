@@ -37,13 +37,13 @@ public class DeleteTodoServlet extends HttpServlet {
 	throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		
-		if(session.getAttribute("prof").equals("instructor")) {
-			id = Integer.parseInt(request.getParameter("todoId"));
-			todoDbUtil.deleteTodo(id);
-			response.sendRedirect("TodoControllerServlet");
+		if(session.getAttribute("prof").equals("instructor")) { // if the profession fetched is an instuctor
+			id = Integer.parseInt(request.getParameter("todoId"));  // retriving the id parameter
+			todoDbUtil.deleteTodo(id);// removing the description 
+			response.sendRedirect("TodoControllerServlet"); // refreching the url
 		}
 		else {
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			request.getRequestDispatcher("error.jsp").forward(request, response); // case if we are not a instructor
 		}
 	}
 }

@@ -39,11 +39,11 @@ public class EditTodoServlet extends HttpServlet {
 	throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		
-		if(session.getAttribute("prof").equals("instructor")) {
-			id = Integer.parseInt(request.getParameter("todoId"));
-			Todo todo = todoDbUtil.fetchTodo(id);
+		if(session.getAttribute("prof").equals("instructor")) { // if the profession fetched is an instuctor
+			id = Integer.parseInt(request.getParameter("todoId")); // retriving the id parameter
+			Todo todo = todoDbUtil.fetchTodo(id); // fetching the description with the given id from the database
 			request.setAttribute("Todo", todo);
-			request.getRequestDispatcher("edit-todo.jsp").forward(request, response);
+			request.getRequestDispatcher("edit-todo.jsp").forward(request, response); // redirectig to the edit functionality
 		}
 		else {
 			request.getRequestDispatcher("error.jsp").forward(request, response);
@@ -52,10 +52,10 @@ public class EditTodoServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
 	ServletException, IOException {
-		String description = request.getParameter("description");
-		Todo todo = new Todo(id, description);
-		todoDbUtil.updateTodo(todo);
-		response.sendRedirect("TodoControllerServlet");
+		String description = request.getParameter("description");// retriving the edited description
+		Todo todo = new Todo(id,description);// creating a new Todo object with the modified description
+		todoDbUtil.updateTodo(todo); // update the description
+		response.sendRedirect("TodoControllerServlet");//redirecting the request to the previous servlet
 	}
 }
 

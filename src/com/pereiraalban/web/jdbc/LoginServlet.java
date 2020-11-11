@@ -51,15 +51,15 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 				
 		try {
-			if (userDbUtil.loginCheck(username, password)) {
-				String profession = userDbUtil.fetchProfession(username);
-				HttpSession session = request.getSession();
-				session.setAttribute("uname", username);
-				session.setAttribute("prof", profession);
-				response.sendRedirect("TodoControllerServlet");
+			if (userDbUtil.loginCheck(username, password))  { //if the password entered matches the database
+				String profession = userDbUtil.fetchProfession(username); // getting the profession from the user 
+				HttpSession session = request.getSession(); 
+				session.setAttribute("uname", username); //storing username as a session variable
+				session.setAttribute("prof", profession); //storing profession as a session variable
+				response.sendRedirect("TodoControllerServlet"); //redirecting to the list page
 			}
 			else {
-				response.sendRedirect("error-login.jsp");
+				response.sendRedirect("error-login.jsp"); //in case the password is incorrect
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

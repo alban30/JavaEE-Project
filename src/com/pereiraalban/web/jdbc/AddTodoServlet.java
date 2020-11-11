@@ -40,17 +40,19 @@ public class AddTodoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 		
-		if(session.getAttribute("prof").equals("instructor")) {
-			request.getRequestDispatcher("add-todo.jsp").forward(request, response);
+		if(session.getAttribute("prof").equals("instructor")) { //if the profession fetched is an instuctor
+			request.getRequestDispatcher("add-todo.jsp").forward(request, response); // he can acces the addf functonality
 		}
 		else {
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			request.getRequestDispatcher("error.jsp").forward(request, response); // case if we are not a instructor
 		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	
+	// adding a description to the list
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException {
 		// TODO Auto-generated method stub

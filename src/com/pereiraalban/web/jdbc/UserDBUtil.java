@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.sql.DataSource;
 
@@ -17,6 +16,8 @@ public class UserDBUtil {
 		dataSource = theDataSource;
 	}
 	
+	//this function checks if the username and password entered matches with the data
+	//if so, it returns true
 	public boolean loginCheck(String username, String password) throws ClassNotFoundException{
 		Connection myConn = null;
 		PreparedStatement myStmt = null;
@@ -44,6 +45,7 @@ public class UserDBUtil {
 		return false;
 	}
 	
+	// this function retrieves the profession from the user database with a given username
 	public String fetchProfession(String username) {
 		Connection myConn = null;
 		Statement myStmt = null;
